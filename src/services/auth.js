@@ -13,18 +13,21 @@ export function useAuth() {
                 throw new Error('Email and password are required')
             }
             
-            const userData = localStorage.getItem("user")
+            const userData = localStorage.getItem('user')
 
             if (userData) {
-                isAuthenticated.value = true
-                if (userData.role == 1) isAdmin.value = true
+                const user = JSON.parse(userData)
+                // simple credential check against stored user (local demo only)
+                if (user.email === credentials.email && user.password === credentials.password) {
+                    isAuthenticated.value = true
+                    if (user.role == 1) isAdmin.value = true
 
-                // console.log(user.value)
+                    localStorage.setItem('isAuthenticated', JSON.stringify(isAuthenticated.value))
+                    localStorage.setItem('isAdmin', JSON.stringify(isAdmin.value))
 
-                localStorage.setItem("isAuthenticated", isAuthenticated.value);
-                localStorage.setItem("isAdmin", isAdmin.value);
-
-                return response
+                    return user
+                }
+                throw new Error('Invalid credentials')
             } else {
                 throw new Error('No user found')
             }
@@ -52,7 +55,7 @@ export function useAuth() {
     // Logout
     function logout() {
         localStorage.removeItem("isAuthenticated");
-       // localStorage.removeItem("user");
+        localStorage.removeItem('user');
         localStorage.removeItem("isAdmin");
     }
     return {
