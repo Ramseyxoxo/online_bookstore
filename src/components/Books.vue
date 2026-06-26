@@ -47,6 +47,57 @@ function buy(book){
           </v-card>
         </v-col>
     </v-row>
+    <v-dialog v-model="showAddBookDialog" max-width="600">
+      <v-form @submit.prevent >
+        <v-card>
+          <v-card-title class="pa-6">
+            <v-row>
+              Add Book
+              <v-spacer></v-spacer>
+              <v-btn class="ma-2" color="blue-darken-2" icon="mdi-close" @click="close();"></v-btn>
+            </v-row>
+          </v-card-title>
+          <v-card-text>
+            <v-row>
+              <v-col md="6">
+                <v-text-field label="Book Title" v-model="bookName" required></v-text-field>
+              </v-col>
+              <v-col md="6">
+                <v-text-field label="Author" v-model="author" required></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col md="6">
+                <v-text-field label="Image" v-model="image" required></v-text-field>
+              </v-col>
+              <v-col md="6">
+                <v-text-field label="Price" v-model="price" required></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col md="12">
+                <v-textarea label="Short Description" v-model="description" required></v-textarea>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col md="12">
+                <v-textarea label="Long Description" v-model="long_description" required></v-textarea>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col md="6">
+                <v-select :items="['Fiction', 'Non Fiction', 'Educational', 'Self Help']" v-model ="genre">
+                </v-select>
+              </v-col>
+            </v-row>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text="Close" variant="plain" @click="close()" ></v-btn>
+            <v-btn color="primary"  text="Save" variant="tonal" @click="addBook()" ></v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-form>
+    </v-dialog>
   </v-container>
-
- </template> 
+</template> 
